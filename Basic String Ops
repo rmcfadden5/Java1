@@ -1,0 +1,33 @@
+import java.util.Scanner;
+
+public class StringFun
+{
+    public static void main(String[] args)
+    {
+        Scanner in = new Scanner(System.in);        
+        System.out.print("Please input a string: ");
+     
+        String name = in.next();
+        
+        int strLength = name.length();
+        System.out.println("String length is: " + strLength);
+     
+        char firstChar = name.charAt(0);
+        System.out.println("First char: " + firstChar);
+        
+        char lastChar = name.charAt(name.length() - 1);
+        System.out.println("Last char: " + lastChar);
+        
+        char middleChar = name.charAt(name.length() / 2);
+        int midPosition = name.length() / 2;
+        System.out.println("Middle char at position "
+        + midPosition + " is: " + middleChar);
+        
+        String firstHalf = name.substring(0, name.length() / 2);
+        String secondHalf = name.substring(name.length() / 2, name.length());
+        System.out.println("Transpose: " + secondHalf + firstHalf);
+        
+        String upperCase = name.toUpperCase();
+        System.out.println("Upper case: " + upperCase);
+    }
+}
