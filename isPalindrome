@@ -1,0 +1,39 @@
+import java.util.Scanner;
+
+public class StringClassifier{
+    public static void main(String[] args){
+    
+        Scanner in = new Scanner(System.in);
+        System.out.println("Welcome to the String Classifier program");
+        System.out.println("Enter a string");
+        String inStr = in.next();
+        boolean noRepeat = false;
+        boolean noPalin = false;
+
+        String firstHalf = inStr.substring(0, inStr.length()/2);
+        String secondHalf = inStr.substring(inStr.length()/2, inStr.length());
+        if (firstHalf.equals(secondHalf)){
+            System.out.println(inStr + " is a repeating string");
+        }
+        else{
+            noRepeat = true;   
+        }
+       
+        String outStr = "";
+        if (inStr != null){
+            int startIndex = inStr.length()-1;
+            for (int i=startIndex; i >= 0; i--){
+                outStr = outStr + inStr.charAt(i);
+            }
+        }
+        if (outStr.equals(inStr)){
+            System.out.println(inStr + " is a palindrome");
+        }
+        else{
+            noPalin = true;
+        }
+        if ((noRepeat != false) && (noPalin != false)){
+            System.out.println("There is nothing special about " + inStr);
+        }
+    }
+}
