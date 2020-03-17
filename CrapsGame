@@ -1,0 +1,234 @@
+import javax.swing.JOptionPane; 
+import java.util.Scanner; 
+public class Craps 
+{    
+    double startBalance = AccountDataValidation();
+    double bet = 0.00;
+    int dice1; 
+    int dice2;
+    int counter = 1; 
+    double wins = 0; 
+    double losses = 0;
+    double newBalance = startBalance;
+    double game = gameplay();
+    
+    public double AccountDataValidation() 
+    {         
+        final double minStartBal = 1.00; 
+        final double maxStartBal = 1000.00;         
+        boolean accountValid = true; 
+        while (accountValid == true) 
+        { 
+            String response = JOptionPane.showInputDialog("Enter starting balance");             
+            try 
+            { 
+                startBalance = Double.parseDouble(response); 
+            } 
+            catch (NullPointerException e) 
+            { 
+                System.out.println("Error: String can't be empty"); 
+                continue; 
+            } 
+            catch (NumberFormatException e) 
+            { 
+                System.out.println("Error: You must enter a numeric value"); 
+                continue; 
+            } 
+            if (startBalance >= minStartBal && startBalance <= maxStartBal) 
+            { 
+                accountValid = false; 
+            } 
+            else if (startBalance < minStartBal) 
+            { 
+                System.out.println("Error: Starting Balance must be greater than 1");        
+            } 
+            else if (startBalance > maxStartBal) 
+            { 
+                System.out.println("Error: Starting Balance must be less than 1001"); 
+            } 
+        } 
+        return startBalance; 
+    }   
+
+    int game() 
+    { 
+        int gameResult;             
+        gameResult = roll(); 
+        return gameResult; 
+    } 
+
+    int roll()     
+    { 
+        dice1 = 1 + (int)(6.0 * Math.random()); 
+        dice2 = 1 + (int)(6.0 * Math.random()); 
+        int sum = dice1 + dice2; 
+        return sum; 
+    } 
+
+    double betting() 
+    { 
+        boolean betIsGood = false; 
+        while (betIsGood == false) 
+        { 
+            Scanner in = new Scanner(System.in); 
+            System.out.println("Enter your bet for the game...\n$" + 
+                newBalance + " to go all in...if you dare"); 
+            if (in.hasNextDouble()) 
+            { 
+                bet = in.nextDouble(); 
+                betIsGood = true; 
+
+            } 
+            else 
+            { 
+                System.out.println("Error: Your bet must be a number"); 
+                betIsGood = false; 
+                continue; 
+            } 
+            if (bet > newBalance) 
+            { 
+                System.out.println("Error: Bet exceeds balance!\n" + 
+                    "Your balance is $" + newBalance); 
+                betIsGood = false; 
+            } 
+            if (bet < 1) 
+            { 
+                System.out.println("Error: Bet must be at least $1"); 
+                betIsGood = false; 
+            } 
+        } 
+        return bet;     
+    } 
+
+    double gameplay() 
+    {  
+        double bet = betting(); 
+        System.out.println("Entering Game #" + counter + 
+            " with a starting bet of $"+ bet);        
+        if (bet == newBalance) 
+        { 
+            System.out.println("You're all in...Good Luck!"); 
+        } 
+        boolean nextRound = true; 
+        int gameResult = 0;        
+        while (nextRound == true) 
+        { 
+            gameResult = game(); 
+            System.out.println("Rolling dice..."); 
+            System.out.println("Player rolls " + gameResult); 
+            if (gameResult == 7 || gameResult == 11) 
+            { 
+                System.out.println("Player wins"); 
+                newBalance = bet + newBalance; 
+                wins++; 
+                nextRound = false; 
+            } 
+            else if (gameResult == 2 || gameResult == 3 || gameResult == 12) 
+            { 
+                System.out.println("Player loses"); 
+                newBalance = newBalance - bet; 
+                losses++; 
+                nextRound = false; 
+            } 
+            else 
+            { 
+                System.out.println("Roll " + gameResult + " again to win"); 
+                break; 
+            } 
+        } 
+        while (nextRound == true) 
+        {        
+            game(); 
+            int point = dice1 + dice2; 
+            System.out.println("Player rolls " + point); 
+            if (gameResult == point) 
+            { 
+                System.out.println("Player wins"); 
+                newBalance = bet + newBalance; 
+                wins++; 
+                nextRound = false; 
+            } 
+            else if (point == 7) 
+            { 
+                System.out.println("Player loses"); 
+                newBalance = newBalance - bet; 
+                losses++; 
+                nextRound = false; 
+            } 
+            else 
+            { 
+                nextRound = true; 
+            } 
+        } 
+        System.out.println("Balance is now $" + newBalance); 
+        boolean newGame = true; 
+        if (newBalance == 0) 
+        { 
+            System.out.println("You're out of money, game over\n" + 
+                "Return with more money"); 
+            newGame = false; 
+        } 
+        while (newGame == true) 
+        { 
+            Scanner in = new Scanner(System.in); 
+            System.out.println("Want to play another game? y for yes, n for no"); 
+            String playAgain =  "";  
+            if (in.hasNext()) 
+            { 
+                playAgain = in.next(); 
+                newGame = true; 
+            } 
+            else 
+            { 
+                System.out.println("Error: You didn't enter either y or n"); 
+            } 
+            if (playAgain.equals("y")) 
+            { 
+                newGame = true; 
+                break; 
+            } 
+            else if (playAgain.equals("n")) 
+            { 
+                newGame = false; 
+                break; 
+            } 
+            else 
+            { 
+                System.out.println("Error: You didn't enter either y or n"); 
+            } 
+        } 
+        if (newGame == true) 
+        { 
+            counter++; 
+            double keepRolling = gameplay(); 
+            return newBalance; 
+        } 
+        else 
+        { 
+            double gamesWonPercent = wins/counter *100; 
+            double gamesLostPercent = losses/counter *100; 
+            double accountChange = (newBalance-startBalance); 
+            double changePercent = (((newBalance-startBalance)/startBalance)*100); 
+            System.out.printf("Game Report\nGames played: %d \nWins: %.0f" + 
+                "\nLosses: %.0f \nEnding Account Balance: $%.2f", counter, wins, losses, newBalance); 
+            if (newBalance < startBalance) 
+            {                
+                System.out.printf("\nYour starting balance decreased by $"+ 
+                    "%.2f (%.0f%%)", accountChange, changePercent); 
+            } 
+            else if (newBalance == startBalance) 
+            { 
+                System.out.println("\nYou broke even"); 
+            } 
+            else 
+            { 
+                System.out.printf("\nYour starting balance increased by $"+ 
+                    "%.2f (%.0f%%)", accountChange, changePercent); 
+            }             
+            System.out.printf("\nOf the %d games played," + 
+                "you have won %.0f games (%.0f%%)\nand lost %.0f games (%.0f%%)", + 
+                counter, wins, gamesWonPercent, losses, gamesLostPercent); 
+            return newBalance; 
+        } 
+    } 
+}
