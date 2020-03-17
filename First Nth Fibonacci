@@ -1,0 +1,40 @@
+import java.util.Scanner;
+/**
+ * Ryan McFadden
+ * V1
+ */
+public class FibonacciAdder{
+    public static void main(String[] args){
+        Scanner in = new Scanner(System.in);
+        System.out.println("Welcome to the Fibonnaci Adder!");
+        boolean run = true;
+        while (true){
+            int counter = 1;
+            int input = 0;
+            int looper = 0;
+            int first = 0;
+            int second = 1;
+            int sum = 0;
+            System.out.println("Enter an integer > 1, Q for quit");
+            if (in.hasNextInt()){
+                input = in.nextInt();
+            }
+            else{
+                System.out.println("Thanks for using the Fibonacci Adder");
+                System.exit(input);
+            }
+            if (input <= 0 || input == 1){
+                System.out.println("You didn't enter an integer > 1");
+                continue;
+            }
+            for (counter = 2; counter <= input; counter++){
+                sum = sum + second;
+                looper = second + first;
+                first = second;
+                second = looper;               
+            }
+            System.out.println("The sum of the first " + input +
+                " Fibonacci numbers is: " + sum);
+        }
+    }
+}
