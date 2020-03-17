@@ -1,0 +1,55 @@
+import java.util.Scanner;
+/**
+ * Ryan McFadden
+ * V1
+ */
+public class FibonacciSequencer{
+    public static void main(String[] args){
+        System.out.println("Welcome to the Fibonacci Sequencer!");
+        Scanner in = new Scanner(System.in);       
+        boolean run = true;
+        int input = 0;
+        while (true){
+        System.out.println("Enter a positive integer, Q for quit");
+            int looper = 0;
+            int first = 0;
+            int second = 1;
+            int counter = 1;
+        if (in.hasNextInt()){
+               input = in.nextInt();
+            }
+            else{
+                System.out.println("Thanks for using the Fibonacci Detector");
+                System.exit(input);
+            }
+        if (input < 0){
+                System.out.println("You didn't enter a positive integer");
+                continue;
+            }
+        while (looper < input){
+            looper = second + first;
+            first = second;
+            second = looper;
+            counter++;                         
+        }        
+        if (input == 0){
+            System.out.println(input + " is a Fibonnaci number at position " +
+            (counter) + " in the order");
+        }
+        else if (input == 1){
+            System.out.println(input + " is a Fibonnaci number " +
+            "at positions both 2 or 3");
+        }
+        else if (input == looper){
+            System.out.println(input + " is a Fibonacci number at position " +
+            (counter + 1) + " in the order");           
+        }
+        else{
+            System.out.println(input + " is not a Fibonnaci number \nHowever, " + input +
+            " does sit between Fibonnaci numbers " + first + " (order:" +
+            (counter) + ")\n" + " and " + second + " (order:" +
+            (counter + 1) + ")");    
+        }        
+    }
+}
+}
