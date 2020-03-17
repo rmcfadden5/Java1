@@ -1,0 +1,79 @@
+import java.util.Scanner;
+public class TriangleClassifier
+{
+    public static void main(String[] args)
+    {
+        Scanner in = new Scanner(System.in);
+        System.out.println("Welcome to the Triangle Classifier Program");
+        System.out.println("Please enter sides in ascending order");
+        
+        int side1Length = 0;
+        int side2Length = 0;
+        int side3Length = 0;
+        boolean valid = true;
+  
+        if (in.hasNextInt()){
+            side1Length = in.nextInt();
+        }
+        else{
+            in.next();
+            valid = false;          
+        }
+        if (in.hasNextInt()){
+            side2Length = in.nextInt();
+        }
+        else{
+            in.next();
+            valid = false;
+        }
+        if (in.hasNextInt()){
+            side3Length = in.nextInt();
+        }
+        else{
+            in.next();
+            valid = false;
+        }
+        if (valid != true){
+            System.out.print("Error: At least one of your sides is not an integer");
+            System.exit(side1Length);
+        }
+        if ((side1Length <= 0) || (side2Length <= 0) || (side3Length <= 0)){
+            System.out.println("Error: At least one of your sides is an invalid value");
+            System.exit(side1Length);
+        }
+        else if ((side1Length > side2Length) || (side2Length > side3Length)){
+            System.out.println("Error: Sides not entered in ascending order");
+            System.exit(side1Length);
+        }
+        else if ((side1Length + side2Length) <= side3Length){
+            System.out.println("Error: Not valid triangle");
+            System.exit(side1Length);
+        }
+        else if ((side1Length + side3Length) <= side2Length){
+            System.out.println("Error: Not valid triangle");
+            System.exit(side1Length);
+        }
+        else if ((side2Length + side3Length) <= side1Length){
+            System.out.println("Error: Not valid triangle");
+            System.exit(side1Length); 
+        }
+        if ((side1Length * side1Length) + (side2Length * side2Length)
+        == (side3Length * side3Length)){
+            System.out.println("The triangle is a right triangle");
+       }
+       else if ((side1Length == side2Length) && (side2Length == side3Length)){
+           System.out.println("The triangle is equilateral");
+       }
+       else if ((side1Length == side2Length) || (side2Length == side3Length)
+       || (side1Length == side3Length)) {
+           System.out.println("The triangle is isoceles");
+       }
+       else if ((side1Length != side2Length) && (side2Length != side3Length)){
+           System.out.println("The triangle is non-distinctive");
+       }
+       double semiPer = ((side1Length + side2Length + side3Length) / 2.0);
+       double area = Math.sqrt(semiPer * (semiPer - side1Length) *
+       (semiPer - side2Length) * (semiPer - side3Length));
+       System.out.printf("Triangle's area is %4.2f", area);
+    }
+}
